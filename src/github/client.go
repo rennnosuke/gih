@@ -8,6 +8,8 @@ import (
 	"io/ioutil"
 	"net/http"
 	"os"
+	"path"
+	"strconv"
 	"strings"
 	"time"
 )
@@ -55,8 +57,7 @@ func (c *Client) UpdateIssue(issueId int, title, description string) *[]byte {
 		fmt.Fprintf(os.Stderr, "Falied to update JSON request body. %#v", req)
 		os.Exit(1)
 	}
-	endpoint := fmt.Sprintf("%s/%d", c.endpoint(), issueId)
-	return c.request("PATCH", endpoint, nil, body)
+	return c.request("PATCH", c.endpoint(strconv.Itoa(issueId)), nil, body)
 }
 
 func (c *Client) request(method string, endpoint string, params *map[string]string, body []byte) *[]byte {
@@ -80,7 +81,7 @@ func (c *Client) request(method string, endpoint string, params *map[string]stri
 	httpClient := http.Client{Timeout: time.Duration(timeout) * time.Second}
 	resp, err := httpClient.Do(req)
 	if err != nil {
-		fmt.Fprintf(os.Stderr, "Failed to http request : method=%s, url=%s, params=%v, body=%v\n", method, endpoint, params, body)
+		fmt.Fprintf(os.Stderr, "Failed to execute http request : method=%s, url=%s, params=%v, body=%v\n", method, endpoint, params, body)
 		os.Exit(1)
 	}
 	defer resp.Body.Close()
@@ -112,8 +113,8 @@ func joinParams(params *map[string]string) string {
 	return urlesc.QueryEscape(query[:len(query)-1])
 }
 
-func (c *Client) endpoint() string {
-	return fmt.Sprintf("%s/repos/%s/%s/issues", baseUrl, c.Organization, c.RepositoryName)
+func (c *Client) endpoint(s ...string) string {
+	return baseUrl + path.Join("/repos", c.Organization, c.RepositoryName, "issues", path.Join(s...))
 }
 
 func isHttpStatusOK(resp *http.Response) bool {
