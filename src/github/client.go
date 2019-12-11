@@ -30,6 +30,8 @@ type IssueCreateRequest struct {
 	Description string `json:"description"`
 }
 
+type IssueUpdateRequest IssueCreateRequest
+
 func (c *Client) SearchIssues(searchWords []string) *[]byte {
 	params := make(map[string]string)
 	params["q"] = strings.Join(searchWords, " ")
@@ -46,6 +48,17 @@ func (c *Client) CreateIssue(title, description string) *[]byte {
 	return c.request("POST", c.endpoint(), nil, body)
 }
 
+func (c *Client) UpdateIssue(issueId int, title, description string) *[]byte {
+	req := IssueUpdateRequest{title, description}
+	body, err := json.Marshal(req)
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Falied to update JSON request body. %#v", req)
+		os.Exit(1)
+	}
+	endpoint := fmt.Sprintf("%s/%d", c.endpoint(), issueId)
+	return c.request("PATCH", endpoint, nil, body)
+}
+
 func (c *Client) request(method string, endpoint string, params *map[string]string, body []byte) *[]byte {
 
 	url := endpoint
@@ -56,7 +69,7 @@ func (c *Client) request(method string, endpoint string, params *map[string]stri
 
 	req, err := http.NewRequest(method, url, bytes.NewBuffer(body))
 	if err != nil {
-		fmt.Fprintf(os.Stderr, "Failed to create new request : method=%s, url=%s, params=%v, body=%v\n", method, endpoint, params, body)
+		fmt.Fprintf(os.Stderr, "Failed to create new request : method=%s, url=%s, params=%v, body=%s\n", method, endpoint, params, string(body))
 		os.Exit(1)
 	}
 
