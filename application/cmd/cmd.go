@@ -1,7 +1,9 @@
 package cmd
 
 import (
-	"github.com/urfave/cli"
+	"fmt"
+	"gih/registry"
+	"github.com/urfave/cli/v2"
 	"os"
 )
 
@@ -16,6 +18,7 @@ func Start() {
 
 	app.Flags = []cli.Flag{
 		&cli.BoolFlag{Name: "config", Aliases: []string{"c"}},
+		&cli.BoolFlag{Name: "issues", Aliases: []string{"i"}},
 	}
 
 	_ = app.Run(os.Args)
@@ -24,10 +27,13 @@ func Start() {
 func action(context *cli.Context) error {
 
 	if context.Bool("config") {
-
+		editConfig()
+		return nil
 	}
+
+	config := readConfig()
+	s := registry.NewGitService(config.AccessToken, config.RepositoryName, config.Organization)
+	fmt.Println(s.GetIssues())
 
 	return nil
 }
-
-
