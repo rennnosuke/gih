@@ -4,13 +4,14 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
+	"gih/domain/model/entity"
+	"gih/domain/repository"
 	"github.com/PuerkitoBio/urlesc"
 	"io/ioutil"
 	"net/http"
 	"os"
 	"path"
 	"strconv"
-	"strings"
 	"time"
 )
 
@@ -21,46 +22,66 @@ const (
 	timeout     = 30 // second
 )
 
-type Client struct {
+type RepositoryImpl struct {
 	AccessToken    string
 	RepositoryName string
 	Organization   string
 }
 
-type IssueCreateRequest struct {
-	Title       string `json:"title"`
-	Description string `json:"description"`
+func (c RepositoryImpl) GetIssue(issueId int) *entity.Issue {
+	b := c.request("GET", c.endpoint(strconv.Itoa(issueId)), nil, nil)
+	res := convertToIssueResponse(b)
+	return &entity.Issue{Title: res.Title, Description: res.Body}
 }
 
-type IssueUpdateRequest IssueCreateRequest
+func (c RepositoryImpl) GetIssues() *[]entity.Issue {
+	b := c.request("GET", c.endpoint(), nil, nil)
+	res := convertToIssueResponses(b)
 
-func (c *Client) SearchIssues(searchWords []string) *[]byte {
-	params := make(map[string]string)
-	params["q"] = strings.Join(searchWords, " ")
-	return c.request("GET", c.endpoint(), &params, nil)
+	var issues []entity.Issue
+	for _, i := range *res {
+		issues = append(issues, entity.Issue{Title: i.Title, Description: i.Body})
+	}
+	return &issues
 }
 
-func (c *Client) CreateIssue(title, description string) *[]byte {
-	req := IssueCreateRequest{title, description}
+func (c RepositoryImpl) CreateIssue(r *repository.IssueCreateRequest) *entity.Issue {
+	req := IssueCreateRequest{r.Title, r.Description}
 	body, err := json.Marshal(req)
 	if err != nil {
-		fmt.Fprintf(os.Stderr, "Falied to create JSON request body. %#v", req)
+		fmt.Fprintf(os.Stderr, "Falied to create JSON request body. %#v\n", req)
 		os.Exit(1)
 	}
-	return c.request("POST", c.endpoint(), nil, body)
+	b := c.request("POST", c.endpoint(), nil, body)
+	res := convertToIssueResponse(b)
+	return &entity.Issue{Title: res.Title, Description: res.Body}
 }
 
-func (c *Client) UpdateIssue(issueId int, title, description string) *[]byte {
-	req := IssueUpdateRequest{title, description}
+func (c RepositoryImpl) UpdateIssue(r *repository.IssueUpdateRequest) *entity.Issue {
+	req := IssueUpdateRequest{r.Title, r.Description}
 	body, err := json.Marshal(req)
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Falied to update JSON request body. %#v", req)
 		os.Exit(1)
 	}
-	return c.request("PATCH", c.endpoint(strconv.Itoa(issueId)), nil, body)
+	b := c.request("PATCH", c.endpoint(strconv.Itoa(r.IssueId)), nil, body)
+	res := convertToIssueResponse(b)
+	return &entity.Issue{Title: res.Title, Description: res.Body}
 }
 
-func (c *Client) request(method string, endpoint string, params *map[string]string, body []byte) *[]byte {
+func (c RepositoryImpl) CloseIssue(id int) *entity.Issue {
+	req := IssueCloseRequest{State: "closed"}
+	body, err := json.Marshal(req)
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Falied to update JSON request body. %#v", req)
+		os.Exit(1)
+	}
+	b := c.request("PATCH", c.endpoint(strconv.Itoa(id)), nil, body)
+	res := convertToIssueResponse(b)
+	return &entity.Issue{Title: res.Title, Description: res.Body}
+}
+
+func (c *RepositoryImpl) request(method string, endpoint string, params *map[string]string, body []byte) *[]byte {
 
 	url := endpoint
 	queryParams := joinParams(params)
@@ -95,7 +116,7 @@ func (c *Client) request(method string, endpoint string, params *map[string]stri
 	if !isHttpStatusOK(resp) {
 		var formatted bytes.Buffer
 		err = json.Indent(&formatted, respBody, "", "\t")
-		fmt.Printf("Failed to request : %d\nResponse body : \n%s \n", resp.StatusCode, string(formatted.Bytes()))
+		fmt.Printf("Failed to request : %d\nEndpoint :%s\nResponse body : \n%s \n", resp.StatusCode, url, string(formatted.Bytes()))
 		os.Exit(1)
 	}
 
@@ -113,7 +134,7 @@ func joinParams(params *map[string]string) string {
 	return urlesc.QueryEscape(query[:len(query)-1])
 }
 
-func (c *Client) endpoint(s ...string) string {
+func (c *RepositoryImpl) endpoint(s ...string) string {
 	return baseUrl + path.Join("/repos", c.Organization, c.RepositoryName, "issues", path.Join(s...))
 }
 
