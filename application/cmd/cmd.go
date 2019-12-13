@@ -47,7 +47,7 @@ func action(context *cli.Context) error {
 	}
 
 	s := registry.NewGitService(config.AccessToken, config.RepositoryName, config.Organization)
-	fmt.Println(s.GetIssues())
+	listIssues(s.GetIssues())
 
 	return nil
 }

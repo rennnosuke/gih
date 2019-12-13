@@ -8,7 +8,7 @@ import (
 type GitHost int
 
 const (
-	Github GitHost = iota
+	Github GitHost = iota + 1
 )
 
 const (
