@@ -14,7 +14,7 @@ Input repository path (current value: https://github.com/myorg/Hello-OctCat) : x
 
 # Issue
 
-<detail>
+<details>
 <summary>TBD functions</summary>
 
 ## List issues
@@ -74,7 +74,7 @@ $ gih -d 536161169
 closed issue : 536161169 
 ```
 
-</detail>
+</details>
 
 # Others
 
