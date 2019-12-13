@@ -14,15 +14,15 @@ Input repository path (current value: https://github.com/myorg/Hello-OctCat) : x
 
 # Issue
 
-<details>
-<summary>TBD functions</summary>
-
 ## List issues
 ```
 $ gih
 ISSUEID       TITLE                DESCRIPTION                STATE    CREATEDAT
 536161169     create .gitignore    Create .gitignore file...  opened
 ```
+
+<details>
+<summary>TBD functions</summary>
 
 ## Create Issue
 
