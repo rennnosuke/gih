@@ -43,7 +43,7 @@ func editConfig() *Config {
 		}
 	}
 
-	host, org, repo, err := ParseRepositoryUrl(c.RepositoryPath)
+	host, org, repo, err := parseRepositoryUrl(c.RepositoryPath)
 	if err != nil {
 		fmt.Printf("Failed to parse repository path : %s\n", c.RepositoryPath)
 		os.Exit(1)

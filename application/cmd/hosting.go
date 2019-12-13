@@ -15,7 +15,7 @@ const (
 	RegexGithubRepositoryUrl = `^https?://github.com/(.+)/(.+)$`
 )
 
-func ParseRepositoryUrl(path string) (GitHost, string, string, error) {
+func parseRepositoryUrl(path string) (GitHost, string, string, error) {
 	r := regexp.MustCompile(RegexGithubRepositoryUrl)
 	if r.MatchString(path) {
 		s := r.FindStringSubmatch(path)
