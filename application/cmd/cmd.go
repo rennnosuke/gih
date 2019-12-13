@@ -17,7 +17,7 @@ func Start() {
 	app.Action = action
 
 	app.Flags = []cli.Flag{
-		&cli.BoolFlag{Name: "config", Aliases: []string{"c"}},
+		&cli.BoolFlag{Name: "init"},
 		&cli.BoolFlag{Name: "browse", Aliases: []string{"w"}},
 	}
 
@@ -26,7 +26,7 @@ func Start() {
 
 func action(context *cli.Context) error {
 
-	if context.Bool("config") {
+	if context.Args().Get(0) == "init" {
 		editConfig()
 		return nil
 	}
