@@ -18,7 +18,7 @@ func Start() {
 
 	app.Flags = []cli.Flag{
 		&cli.BoolFlag{Name: "config", Aliases: []string{"c"}},
-		&cli.BoolFlag{Name: "issues", Aliases: []string{"i"}},
+		&cli.BoolFlag{Name: "browse", Aliases: []string{"w"}},
 	}
 
 	_ = app.Run(os.Args)
@@ -36,6 +36,14 @@ func action(context *cli.Context) error {
 		fmt.Println("Configuration is not found.")
 		fmt.Println("Execute `$ gih -c` to set git hosting service configuration.")
 		os.Exit(1)
+	}
+
+	if context.Bool("browse") {
+		err := openWebBrowser(config.RepositoryPath)
+		if err != nil {
+			fmt.Printf("%s\n", err.Error())
+		}
+		return nil
 	}
 
 	s := registry.NewGitService(config.AccessToken, config.RepositoryName, config.Organization)
