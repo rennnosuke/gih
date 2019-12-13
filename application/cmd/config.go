@@ -13,9 +13,11 @@ const (
 )
 
 type Config struct {
+	Host           GitHost
 	AccessToken    string
-	RepositoryName string
+	RepositoryPath string
 	Organization   string
+	RepositoryName string
 }
 
 func editConfig() *Config {
@@ -33,21 +35,22 @@ func editConfig() *Config {
 		}
 	}
 
-	fmt.Printf("Input repository name (current value: \033[1;34m%s\033[0m) : ", c.RepositoryName)
+	fmt.Printf("Input repository path (current value: \033[1;34m%s\033[0m) : ", c.RepositoryPath)
 	if scanner.Scan() {
-		repositoryName := scanner.Text()
-		if repositoryName != "" {
-			c.RepositoryName = repositoryName
+		repositoryPath := scanner.Text()
+		if repositoryPath != "" {
+			c.RepositoryPath = repositoryPath
 		}
 	}
 
-	fmt.Printf("Input organization name (current value: \033[1;34m%s\033[0m) : ", c.Organization)
-	if scanner.Scan() {
-		organization := scanner.Text()
-		if organization != "" {
-			c.Organization = organization
-		}
+	host, org, repo, err := ParseRepositoryUrl(c.RepositoryPath)
+	if err != nil {
+		fmt.Printf("Failed to parse repository path : %s\n", c.RepositoryPath)
+		os.Exit(1)
 	}
+	c.Host = host
+	c.Organization = org
+	c.RepositoryName = repo
 
 	fmt.Println(".config.json saved.")
 
@@ -85,13 +88,7 @@ func saveConfig(c *Config) {
 		fmt.Fprintf(os.Stderr, "Failed to convert object to json : %v\n", string(b))
 		os.Exit(1)
 	}
-	var fOpenFile func(string) (*os.File, error)
-	if isExist(configFilePath) {
-		fOpenFile = os.Open
-	} else {
-		fOpenFile = os.Create
-	}
-	f, err := fOpenFile(configFilePath)
+	f, err := os.OpenFile(configFilePath, os.O_RDWR|os.O_CREATE, 0666)
 	defer f.Close()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Failed to open file : %v\n", configFilePath)
