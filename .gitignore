@@ -96,3 +96,6 @@ fabric.properties
 
 # config info
 .config.json
+
+# gih binary created by ./build.sh
+gih
