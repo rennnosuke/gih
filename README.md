@@ -23,18 +23,28 @@ ISSUEID       TITLE                DESCRIPTION                STATE    CREATEDAT
 
 ## Create Issue
 
+#### Simple
+```
+$ gih -c "create .gitignore" "Create .gitignore file for ignore some file."
+created issue:
+[TITLE] 
+title
+
+[DESCRIPTION]
+Create .gitignore file for ignore some file.
+```
+
+<details>
+<summary>TBD functions</summary>
+
+You can write your issue description as markdown in editor.
+
 #### Edit with editor
 
 ```
 $ gih -c
 ### show editor (such as `vi`.)
 ```
-
-<details>
-<summary>TBD functions</summary>
-
-
-You can write your issue description as markdown in editor.
 
 ###### in editor
 ```
@@ -52,16 +62,6 @@ Following folders/files should be contained in .gitignore but not yet.
 - [] config.yml
 ```
 
-#### Simple
-```
-$ gih -c "create .gitignore" "Create .gitignore file for ignore some file."
-created issue:
-[TITLE] 
-title
-
-[DESCRIPTION]
-Create .gitignore file for ignore some file.
-```
 
 ## Update Issue
 ```
