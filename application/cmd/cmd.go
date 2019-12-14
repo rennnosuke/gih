@@ -34,7 +34,7 @@ func action(context *cli.Context) error {
 	config := readConfig()
 	if config == nil {
 		fmt.Println("Configuration is not found.")
-		fmt.Println("Execute `$ gih -c` to set git hosting service configuration.")
+		fmt.Println("Execute `$ gih init` to set git hosting service configuration.")
 		os.Exit(1)
 	}
 
