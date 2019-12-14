@@ -26,9 +26,9 @@ ISSUEID       TITLE                DESCRIPTION                STATE    CREATEDAT
 #### Simple
 ```
 $ gih -c "create .gitignore" "Create .gitignore file for ignore some file."
-created issue:
-[TITLE] 
-title
+create issue : XXXXXXXXX 
+[TITLE]
+create .gitignore
 
 [DESCRIPTION]
 Create .gitignore file for ignore some file.
