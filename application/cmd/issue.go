@@ -36,6 +36,17 @@ func createIssue(service *service.GitService, context *cli.Context) {
 	printIssue(issue, "create")
 }
 
+func closeIssue(service *service.GitService, context *cli.Context) error {
+	sid := context.Args().Get(0)
+	id, err := strconv.Atoi(sid)
+	if err != nil {
+		return err
+	}
+	issue := service.CloseIssue(id)
+	printIssue(issue, "delete")
+	return nil
+}
+
 func printIssue(issue *entity.Issue, prefix string) {
 	fmt.Printf("%s issue : %d\n[TITLE]\n%s\n\n[DESCRIPTION]\n%s\n", prefix, issue.Number, issue.Title, issue.Description)
 }
