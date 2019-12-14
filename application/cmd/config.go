@@ -53,6 +53,7 @@ func editConfig() *Config {
 	c.RepositoryName = repo
 
 	fmt.Println(".config.json saved.")
+	fmt.Printf("Git Hosting Service: %s\n", host.String())
 
 	saveConfig(c)
 

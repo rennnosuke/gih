@@ -8,8 +8,17 @@ import (
 type GitHost int
 
 const (
-	Github GitHost = iota + 1
+	GitHub GitHost = iota + 1
 )
+
+func (g *GitHost) String() string {
+	switch *g {
+	case GitHub:
+		return "GitHub"
+	default:
+		return ""
+	}
+}
 
 const (
 	RegexGithubRepositoryUrl = `^https?://github.com/(.+)/(.+)$`
@@ -20,7 +29,7 @@ func parseRepositoryUrl(path string) (GitHost, string, string, error) {
 	if r.MatchString(path) {
 		s := r.FindStringSubmatch(path)
 		org, repo := s[1], s[2]
-		return Github, org, repo, nil
+		return GitHub, org, repo, nil
 	}
-	return Github, "", "", fmt.Errorf("Failed to parse url: %s\n", path)
+	return GitHub, "", "", fmt.Errorf("Failed to parse url: %s\n", path)
 }

@@ -11,7 +11,7 @@ func Start() {
 	app := cli.NewApp()
 
 	app.Name = "gih"
-	app.Usage = "Github Client CLI."
+	app.Usage = "GitHub Client CLI."
 	app.Version = "0.0.1"
 
 	app.Action = action

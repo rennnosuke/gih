@@ -10,6 +10,7 @@ $ gih init
 Input access token (current value: [ACCESS_TOKEN]) : xxx
 Input repository path (current value: https://github.com/myorg/Hello-OctCat) : xxx
 .config.json saved.
+Git Hosting Service: GitHub
 ```
 
 # Issue
@@ -17,7 +18,7 @@ Input repository path (current value: https://github.com/myorg/Hello-OctCat) : x
 ## List issues
 ```
 $ gih
-ISSUEID       TITLE                DESCRIPTION                STATE    CREATEDAT
+ISSUEID       TITLE                DESCRIPTION                STATE    CREATED_AT
 536161169     create .gitignore    Create .gitignore file...  opened
 ```
 
