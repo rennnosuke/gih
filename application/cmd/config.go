@@ -88,7 +88,7 @@ func saveConfig(c *Config) {
 		fmt.Fprintf(os.Stderr, "Failed to convert object to json : %v\n", string(b))
 		os.Exit(1)
 	}
-	f, err := os.OpenFile(configFilePath, os.O_RDWR|os.O_CREATE, 0666)
+	f, err := os.OpenFile(configFilePath, os.O_RDWR|os.O_CREATE|os.O_TRUNC, 0666)
 	defer f.Close()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Failed to open file : %v\n", configFilePath)
