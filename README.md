@@ -21,9 +21,6 @@ ISSUEID       TITLE                DESCRIPTION                STATE    CREATEDAT
 536161169     create .gitignore    Create .gitignore file...  opened
 ```
 
-<details>
-<summary>TBD functions</summary>
-
 ## Create Issue
 
 #### Edit with editor
@@ -32,6 +29,10 @@ ISSUEID       TITLE                DESCRIPTION                STATE    CREATEDAT
 $ gih -c
 ### show editor (such as `vi`.)
 ```
+
+<details>
+<summary>TBD functions</summary>
+
 
 You can write your issue description as markdown in editor.
 
