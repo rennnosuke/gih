@@ -32,11 +32,27 @@ ISSUEID       TITLE                DESCRIPTION                STATE    CREATED_A
 $ gih -c "create .gitignore" "Create .gitignore file for ignore some file."
 create issue : 1 
 [TITLE]
-create .gitignore
+Create .gitignore
 
 [DESCRIPTION]
 Create .gitignore file for ignore some file.
 ```
+
+## Update Issue
+
+`$ gih -u [ISSUE_NUMBER] [TITLE] [DESCRIPTION]`
+
+```
+$ gih -u 1 Update .gitignore" "Update .gitignore file for ignore some file."
+update issue : 1 
+[TITLE]
+Update .gitignore
+
+[DESCRIPTION]
+Update .gitignore file for ignore some file.
+
+```
+
 
 ## Close Issue
 
@@ -81,17 +97,6 @@ Following folders/files should be contained in .gitignore but not yet.
 - [] .env
 - [] config.yml
 ```
-
-
-## Update Issue
-
-`$ gih -u [ISSUE_NUMBER]`
-
-```
-$ gih -u 1
-### show editor (such as `vi`.)
-```
-
 
 </details>
 

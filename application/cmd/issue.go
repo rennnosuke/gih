@@ -36,6 +36,19 @@ func createIssue(service *service.GitService, context *cli.Context) {
 	printIssue(issue, "create")
 }
 
+func updateIssue(service *service.GitService, context *cli.Context) error {
+	issueNumberStr := context.Args().Get(0)
+	issueNumber, err := strconv.Atoi(issueNumberStr)
+	if err != nil {
+		return err
+	}
+	title := context.Args().Get(1)
+	description := context.Args().Get(2)
+	issue := service.UpdateIssue(issueNumber, title, description)
+	printIssue(issue, "update")
+	return nil
+}
+
 func closeIssue(service *service.GitService, context *cli.Context) error {
 	sid := context.Args().Get(0)
 	id, err := strconv.Atoi(sid)

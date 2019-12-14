@@ -19,6 +19,7 @@ func Start() {
 	app.Flags = []cli.Flag{
 		&cli.BoolFlag{Name: "init"},
 		&cli.BoolFlag{Name: "create", Aliases: []string{"c"}},
+		&cli.BoolFlag{Name: "update", Aliases: []string{"u"}},
 		&cli.BoolFlag{Name: "close", Aliases: []string{"d"}},
 		&cli.BoolFlag{Name: "browse", Aliases: []string{"w"}},
 	}
@@ -49,6 +50,10 @@ func action(context *cli.Context) error {
 	if context.Bool("create") {
 		createIssue(s, context)
 		return nil
+	}
+
+	if context.Bool("update") {
+		return updateIssue(s, context)
 	}
 
 	if context.Bool("close") {
