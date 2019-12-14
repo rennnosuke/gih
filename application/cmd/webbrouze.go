@@ -6,7 +6,7 @@ import (
 	"runtime"
 )
 
-func openWebBrowser(repoUrl string) error {
+func browse(repoUrl string) error {
 
 	fmt.Printf("Open %s...\n", repoUrl)
 

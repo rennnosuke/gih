@@ -40,24 +40,17 @@ func action(context *cli.Context) error {
 	}
 
 	if context.Bool("browse") {
-		err := openWebBrowser(config.RepositoryPath)
-		if err != nil {
-			fmt.Printf("%s\n", err.Error())
-		}
-		return nil
+		return browse(config.RepositoryPath)
 	}
 
 	s := registry.NewGitService(config.AccessToken, config.RepositoryName, config.Organization)
 
 	if context.Bool("create") {
-		title := context.Args().Get(0)
-		description := context.Args().Get(1)
-		issue := s.CreateIssue(title, description)
-		printIssue(issue, "create")
+		createIssue(s, context)
 		return nil
 	}
 
-	listIssues(s.GetIssues())
+	listIssues(s)
 
 	return nil
 }

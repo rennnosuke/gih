@@ -3,6 +3,8 @@ package cmd
 import (
 	"fmt"
 	"gih/domain/model/entity"
+	"gih/domain/service"
+	"github.com/urfave/cli/v2"
 	"regexp"
 	"strconv"
 	"unicode/utf8"
@@ -17,13 +19,21 @@ var formatPrintIssue = "%-10v%-" + strconv.Itoa(titleMaxLength) + "s%-" + strcon
 
 var newLineRegex = regexp.MustCompile(`\r?\n`)
 
-func listIssues(issues *[]entity.Issue) {
+func listIssues(s *service.GitService) {
+	issues := s.GetIssues()
 	fmt.Printf(formatPrintIssue, "ISSUEID", "TITLE", "DESCRIPTION", "STATE", "CREATED_AT")
 	for _, i := range *issues {
 		title := trim(i.Title, titleMaxLength, "...")
 		description := trim(i.Description, descriptionMaxLength, "...")
 		fmt.Printf(formatPrintIssue, i.ID, title, description, "", "")
 	}
+}
+
+func createIssue(service *service.GitService, context *cli.Context) {
+	title := context.Args().Get(0)
+	description := context.Args().Get(1)
+	issue := service.CreateIssue(title, description)
+	printIssue(issue, "create")
 }
 
 func printIssue(issue *entity.Issue, prefix string) {
