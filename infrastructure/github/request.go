@@ -2,7 +2,7 @@ package github
 
 type IssueCreateRequest struct {
 	Title       string `json:"title"`
-	Description string `json:"description"`
+	Description string `json:"body"`
 }
 
 type IssueUpdateRequest IssueCreateRequest
