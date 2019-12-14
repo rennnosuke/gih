@@ -19,15 +19,32 @@ Git Hosting Service: GitHub
 ```
 $ gih
 ISSUEID       TITLE                DESCRIPTION                STATE    CREATED_AT
-536161169     create .gitignore    Create .gitignore file...  opened
+1     create .gitignore    Create .gitignore file...  opened
 ```
 
 ## Create Issue
 
 #### Simple
+
+`$ gih -c [TITLE] [DESCRIPTION]`
+
 ```
 $ gih -c "create .gitignore" "Create .gitignore file for ignore some file."
-create issue : XXXXXXXXX 
+create issue : 1 
+[TITLE]
+create .gitignore
+
+[DESCRIPTION]
+Create .gitignore file for ignore some file.
+```
+
+## Close Issue
+
+`$ gih -d [ISSUE_NUMBER]`
+
+```
+$ gih -d 1 
+closed issue : 1
 [TITLE]
 create .gitignore
 
@@ -41,6 +58,8 @@ Create .gitignore file for ignore some file.
 You can write your issue description as markdown in editor.
 
 #### Edit with editor
+
+`$ gih -c`
 
 ```
 $ gih -c
@@ -65,22 +84,23 @@ Following folders/files should be contained in .gitignore but not yet.
 
 
 ## Update Issue
+
+`$ gih -u [ISSUE_NUMBER]`
+
 ```
-$ gih -u 536161169 
+$ gih -u 1
 ### show editor (such as `vi`.)
 ```
 
-## Close Issue
-```
-$ gih -d 536161169  
-closed issue : 536161169 
-```
 
 </details>
 
 # Others
 
 ## Show Hosting Web Site
+
+`$ gih -w`
+
 ```
 $ gih -w
 Open https://github.com/myorg/Hello-OctCat...
