@@ -25,7 +25,7 @@ func listIssues(issues *[]entity.Issue) {
 }
 
 func printIssue(issue *entity.Issue, prefix string) {
-	fmt.Printf("%s issue : %d ", prefix, issue.ID)
+	fmt.Printf("%s issue : %d\n[TITLE]\n%s\n\n[DESCRIPTION]\n%s\n", prefix, issue.ID,issue.Title,issue.Description)
 }
 
 func trimTitle(title string) string {
