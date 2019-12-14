@@ -25,7 +25,7 @@ func listIssues(s *service.GitService) {
 	for _, i := range *issues {
 		title := trim(i.Title, titleMaxLength, "...")
 		description := trim(i.Description, descriptionMaxLength, "...")
-		fmt.Printf(formatPrintIssue, i.ID, title, description, "", "")
+		fmt.Printf(formatPrintIssue, i.Number, title, description, "", "")
 	}
 }
 
@@ -37,7 +37,7 @@ func createIssue(service *service.GitService, context *cli.Context) {
 }
 
 func printIssue(issue *entity.Issue, prefix string) {
-	fmt.Printf("%s issue : %d\n[TITLE]\n%s\n\n[DESCRIPTION]\n%s\n", prefix, issue.ID, issue.Title, issue.Description)
+	fmt.Printf("%s issue : %d\n[TITLE]\n%s\n\n[DESCRIPTION]\n%s\n", prefix, issue.Number, issue.Title, issue.Description)
 }
 
 func trim(s string, maxLength int, omitPostFix string) string {

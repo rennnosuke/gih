@@ -31,7 +31,7 @@ type RepositoryImpl struct {
 func (c RepositoryImpl) GetIssue(issueId int) *entity.Issue {
 	b := c.request("GET", c.endpoint(strconv.Itoa(issueId)), nil, nil)
 	res := convertToIssueResponse(b)
-	return &entity.Issue{ID: res.Id, Title: res.Title, Description: res.Body}
+	return &entity.Issue{Number: res.Number, Title: res.Title, Description: res.Body}
 }
 
 func (c RepositoryImpl) GetIssues() *[]entity.Issue {
@@ -40,7 +40,7 @@ func (c RepositoryImpl) GetIssues() *[]entity.Issue {
 
 	var issues []entity.Issue
 	for _, i := range *res {
-		issues = append(issues, entity.Issue{ID: i.Id, Title: i.Title, Description: i.Body})
+		issues = append(issues, entity.Issue{Number: i.Number, Title: i.Title, Description: i.Body})
 	}
 	return &issues
 }
@@ -54,7 +54,7 @@ func (c RepositoryImpl) CreateIssue(r *repository.IssueCreateRequest) *entity.Is
 	}
 	b := c.request("POST", c.endpoint(), nil, body)
 	res := convertToIssueResponse(b)
-	return &entity.Issue{ID: res.Id, Title: res.Title, Description: res.Body}
+	return &entity.Issue{Number: res.Number, Title: res.Title, Description: res.Body}
 }
 
 func (c RepositoryImpl) UpdateIssue(r *repository.IssueUpdateRequest) *entity.Issue {
@@ -66,7 +66,7 @@ func (c RepositoryImpl) UpdateIssue(r *repository.IssueUpdateRequest) *entity.Is
 	}
 	b := c.request("PATCH", c.endpoint(strconv.Itoa(r.IssueId)), nil, body)
 	res := convertToIssueResponse(b)
-	return &entity.Issue{ID: res.Id, Title: res.Title, Description: res.Body}
+	return &entity.Issue{Number: res.Number, Title: res.Title, Description: res.Body}
 }
 
 func (c RepositoryImpl) CloseIssue(id int) *entity.Issue {
@@ -78,7 +78,7 @@ func (c RepositoryImpl) CloseIssue(id int) *entity.Issue {
 	}
 	b := c.request("PATCH", c.endpoint(strconv.Itoa(id)), nil, body)
 	res := convertToIssueResponse(b)
-	return &entity.Issue{ID: res.Id, Title: res.Title, Description: res.Body}
+	return &entity.Issue{Number: res.Number, Title: res.Title, Description: res.Body}
 }
 
 func (c *RepositoryImpl) request(method string, endpoint string, params *map[string]string, body []byte) *[]byte {

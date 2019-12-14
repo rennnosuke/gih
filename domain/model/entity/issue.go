@@ -1,7 +1,7 @@
 package entity
 
 type Issue struct {
-	ID          int
+	Number      int
 	Title       string
 	Description string
 }

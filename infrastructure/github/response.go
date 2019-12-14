@@ -7,10 +7,10 @@ import (
 )
 
 type IssueResponse struct {
-	Id    int    `json:"id"`
-	State string `json:"state"`
-	Title string `json:"title"`
-	Body  string `json:"body"`
+	Number int    `json:"Number"`
+	State  string `json:"state"`
+	Title  string `json:"title"`
+	Body   string `json:"body"`
 }
 
 func convertToIssueResponse(b *[]byte) *IssueResponse {
