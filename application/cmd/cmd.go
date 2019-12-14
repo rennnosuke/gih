@@ -18,6 +18,7 @@ func Start() {
 
 	app.Flags = []cli.Flag{
 		&cli.BoolFlag{Name: "init"},
+		&cli.BoolFlag{Name: "create", Aliases: []string{"c"}},
 		&cli.BoolFlag{Name: "browse", Aliases: []string{"w"}},
 	}
 
@@ -47,6 +48,15 @@ func action(context *cli.Context) error {
 	}
 
 	s := registry.NewGitService(config.AccessToken, config.RepositoryName, config.Organization)
+
+	if context.Bool("create") {
+		title := context.Args().Get(0)
+		description := context.Args().Get(1)
+		issue := s.CreateIssue(title, description)
+		printIssue(issue, "create")
+		return nil
+	}
+
 	listIssues(s.GetIssues())
 
 	return nil

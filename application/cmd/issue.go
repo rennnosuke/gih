@@ -24,6 +24,10 @@ func listIssues(issues *[]entity.Issue) {
 	}
 }
 
+func printIssue(issue *entity.Issue, prefix string) {
+	fmt.Printf("%s issue : %d ", prefix, issue.ID)
+}
+
 func trimTitle(title string) string {
 	return trim(title, titleMaxLength, "...")
 }
