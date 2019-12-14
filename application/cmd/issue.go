@@ -20,20 +20,14 @@ var newLineRegex = regexp.MustCompile(`\r?\n`)
 func listIssues(issues *[]entity.Issue) {
 	fmt.Printf(formatPrintIssue, "ISSUEID", "TITLE", "DESCRIPTION", "STATE", "CREATED_AT")
 	for _, i := range *issues {
-		fmt.Printf(formatPrintIssue, i.ID, trimTitle(i.Title), trimDescription(i.Description), "", "")
+		title := trim(i.Title, titleMaxLength, "...")
+		description := trim(i.Description, descriptionMaxLength, "...")
+		fmt.Printf(formatPrintIssue, i.ID, title, description, "", "")
 	}
 }
 
 func printIssue(issue *entity.Issue, prefix string) {
-	fmt.Printf("%s issue : %d\n[TITLE]\n%s\n\n[DESCRIPTION]\n%s\n", prefix, issue.ID,issue.Title,issue.Description)
-}
-
-func trimTitle(title string) string {
-	return trim(title, titleMaxLength, "...")
-}
-
-func trimDescription(description string) string {
-	return trim(description, descriptionMaxLength, "...")
+	fmt.Printf("%s issue : %d\n[TITLE]\n%s\n\n[DESCRIPTION]\n%s\n", prefix, issue.ID, issue.Title, issue.Description)
 }
 
 func trim(s string, maxLength int, omitPostFix string) string {
