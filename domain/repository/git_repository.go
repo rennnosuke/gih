@@ -6,11 +6,11 @@ import (
 
 type GitRepository interface {
 	// issue manipulation
-	GetIssue(issueId int) *entity.Issue
-	GetIssues() *[]entity.Issue
-	CreateIssue(r *IssueCreateRequest) *entity.Issue
-	UpdateIssue(r *IssueUpdateRequest) *entity.Issue
-	CloseIssue(id int) *entity.Issue
+	GetIssue(issueId int) (*entity.Issue, error)
+	GetIssues() (*[]entity.Issue, error)
+	CreateIssue(r *IssueCreateRequest) (*entity.Issue, error)
+	UpdateIssue(r *IssueUpdateRequest) (*entity.Issue, error)
+	CloseIssue(id int) (*entity.Issue, error)
 }
 
 type IssueCreateRequest struct {

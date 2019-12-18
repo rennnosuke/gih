@@ -48,8 +48,7 @@ func action(context *cli.Context) error {
 	s := registry.NewGitService(config.AccessToken, config.RepositoryName, config.Organization)
 
 	if context.Bool("create") {
-		createIssue(s, context)
-		return nil
+		return createIssue(s, context)
 	}
 
 	if context.Bool("update") {
@@ -60,7 +59,5 @@ func action(context *cli.Context) error {
 		return closeIssue(s, context)
 	}
 
-	listIssues(s)
-
-	return nil
+	return listIssues(s)
 }

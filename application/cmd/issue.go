@@ -19,21 +19,29 @@ var formatPrintIssue = "%-10v%-" + strconv.Itoa(titleMaxLength) + "s%-" + strcon
 
 var newLineRegex = regexp.MustCompile(`\r?\n`)
 
-func listIssues(s *service.GitService) {
-	issues := s.GetIssues()
+func listIssues(s *service.GitService) error {
+	issues, err := s.GetIssues()
+	if err != nil {
+		return err
+	}
 	fmt.Printf(formatPrintIssue, "ISSUEID", "TITLE", "DESCRIPTION", "STATE", "CREATED_AT")
 	for _, i := range *issues {
 		title := trim(i.Title, titleMaxLength, "...")
 		description := trim(i.Description, descriptionMaxLength, "...")
 		fmt.Printf(formatPrintIssue, i.Number, title, description, "", "")
 	}
+	return nil
 }
 
-func createIssue(service *service.GitService, context *cli.Context) {
+func createIssue(service *service.GitService, context *cli.Context) error {
 	title := context.Args().Get(0)
 	description := context.Args().Get(1)
-	issue := service.CreateIssue(title, description)
+	issue, err := service.CreateIssue(title, description)
+	if err != nil {
+		return err
+	}
 	printIssue(issue, "create")
+	return nil
 }
 
 func updateIssue(service *service.GitService, context *cli.Context) error {
@@ -44,7 +52,10 @@ func updateIssue(service *service.GitService, context *cli.Context) error {
 	}
 	title := context.Args().Get(1)
 	description := context.Args().Get(2)
-	issue := service.UpdateIssue(issueNumber, title, description)
+	issue, err := service.UpdateIssue(issueNumber, title, description)
+	if err != nil {
+		return err
+	}
 	printIssue(issue, "update")
 	return nil
 }
@@ -55,7 +66,10 @@ func closeIssue(service *service.GitService, context *cli.Context) error {
 	if err != nil {
 		return err
 	}
-	issue := service.CloseIssue(id)
+	issue, err := service.CloseIssue(id)
+	if err != nil {
+		return err
+	}
 	printIssue(issue, "delete")
 	return nil
 }
