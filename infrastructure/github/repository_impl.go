@@ -28,13 +28,13 @@ type RepositoryImpl struct {
 	Organization   string
 }
 
-func (c RepositoryImpl) GetIssue(issueId int) *entity.Issue {
+func (c *RepositoryImpl) GetIssue(issueId int) *entity.Issue {
 	b := c.request("GET", c.endpoint(strconv.Itoa(issueId)), nil, nil)
 	res := convertToIssueResponse(b)
 	return &entity.Issue{Number: res.Number, Title: res.Title, Description: res.Body}
 }
 
-func (c RepositoryImpl) GetIssues() *[]entity.Issue {
+func (c *RepositoryImpl) GetIssues() *[]entity.Issue {
 	b := c.request("GET", c.endpoint(), nil, nil)
 	res := convertToIssueResponses(b)
 
@@ -45,7 +45,7 @@ func (c RepositoryImpl) GetIssues() *[]entity.Issue {
 	return &issues
 }
 
-func (c RepositoryImpl) CreateIssue(r *repository.IssueCreateRequest) *entity.Issue {
+func (c *RepositoryImpl) CreateIssue(r *repository.IssueCreateRequest) *entity.Issue {
 	req := IssueCreateRequest{r.Title, r.Description}
 	body, err := json.Marshal(req)
 	if err != nil {
@@ -57,7 +57,7 @@ func (c RepositoryImpl) CreateIssue(r *repository.IssueCreateRequest) *entity.Is
 	return &entity.Issue{Number: res.Number, Title: res.Title, Description: res.Body}
 }
 
-func (c RepositoryImpl) UpdateIssue(r *repository.IssueUpdateRequest) *entity.Issue {
+func (c *RepositoryImpl) UpdateIssue(r *repository.IssueUpdateRequest) *entity.Issue {
 	req := IssueUpdateRequest{r.Title, r.Description}
 	body, err := json.Marshal(req)
 	if err != nil {
@@ -69,7 +69,7 @@ func (c RepositoryImpl) UpdateIssue(r *repository.IssueUpdateRequest) *entity.Is
 	return &entity.Issue{Number: res.Number, Title: res.Title, Description: res.Body}
 }
 
-func (c RepositoryImpl) CloseIssue(id int) *entity.Issue {
+func (c *RepositoryImpl) CloseIssue(id int) *entity.Issue {
 	req := IssueCloseRequest{State: "closed"}
 	body, err := json.Marshal(req)
 	if err != nil {

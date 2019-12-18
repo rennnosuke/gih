@@ -6,7 +6,7 @@ import (
 )
 
 func NewGitRepository(accessToken, repositoryName, organization string) repository.GitRepository {
-	return github.RepositoryImpl{
+	return &github.RepositoryImpl{
 		AccessToken:    accessToken,
 		RepositoryName: repositoryName,
 		Organization:   organization,
