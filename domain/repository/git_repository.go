@@ -1,8 +1,6 @@
 package repository
 
-import (
-	"gih/domain/model/entity"
-)
+import "github.com/rennnosuke/gih/domain/model/entity"
 
 type GitRepository interface {
 	// issue manipulation

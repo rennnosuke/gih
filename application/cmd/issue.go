@@ -2,8 +2,9 @@ package cmd
 
 import (
 	"fmt"
-	"gih/domain/model/entity"
-	"gih/domain/service"
+	"github.com/rennnosuke/gih/domain/model/entity"
+	"github.com/rennnosuke/gih/domain/service"
+	"github.com/urfave/cli"
 	"github.com/urfave/cli/v2"
 	"regexp"
 	"strconv"

@@ -1,7 +1,7 @@
 package registry
 
 import (
-	"gih/domain/service"
+	"github.com/rennnosuke/gih/domain/service"
 )
 
 func NewGitService(accessToken, repositoryName, organization string) *service.GitService {

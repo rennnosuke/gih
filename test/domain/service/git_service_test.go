@@ -2,7 +2,7 @@ package service
 
 import (
 	"fmt"
-	"gih/registry"
+	"github.com/rennnosuke/gih/registry"
 	"os"
 	"testing"
 )
@@ -21,7 +21,12 @@ func TestGetIssue(t *testing.T) {
 
 	s := registry.NewGitService(accessToken, repositoryName, organization)
 
-	result := s.GetIssue(10)
+	result, err := s.GetIssue(10)
+	if err != nil {
+		fmt.Printf("%s\n", err)
+		t.Fail()
+	}
+
 	fmt.Printf("%#v\n", result)
 
 }
@@ -34,7 +39,12 @@ func TestGetIssues(t *testing.T) {
 
 	s := registry.NewGitService(accessToken, repositoryName, organization)
 
-	result := s.GetIssues()
+	result, err := s.GetIssues()
+	if err != nil {
+		fmt.Printf("%s\n", err)
+		t.Fail()
+	}
+
 	fmt.Printf("%#v\n", result)
 
 }
@@ -49,7 +59,13 @@ func TestCreateIssue(t *testing.T) {
 	description := "Create Issue Test Description."
 
 	s := registry.NewGitService(accessToken, repositoryName, organization)
-	result := s.CreateIssue(title, description)
+
+	result, err := s.CreateIssue(title, description)
+	if err != nil {
+		fmt.Printf("%s\n", err)
+		t.Fail()
+	}
+
 	fmt.Println(result)
 
 }
@@ -64,7 +80,12 @@ func TestUpdateIssue(t *testing.T) {
 	description := "Update Issue Test Description."
 
 	s := registry.NewGitService(accessToken, repositoryName, organization)
-	result := s.UpdateIssue(10, title, description)
+
+	result, err := s.UpdateIssue(10, title, description)
+	if err != nil {
+		fmt.Printf("%s\n", err)
+		t.Fail()
+	}
 
 	fmt.Println(result)
 

@@ -1,8 +1,8 @@
 package registry
 
 import (
-	"gih/domain/repository"
-	"gih/infrastructure/github"
+	"github.com/rennnosuke/gih/domain/repository"
+	"github.com/rennnosuke/gih/infrastructure/github"
 )
 
 func NewGitRepository(accessToken, repositoryName, organization string) repository.GitRepository {

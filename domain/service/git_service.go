@@ -1,8 +1,8 @@
 package service
 
 import (
-	"gih/domain/model/entity"
-	"gih/domain/repository"
+	"github.com/rennnosuke/gih/domain/model/entity"
+	"github.com/rennnosuke/gih/domain/repository"
 )
 
 type GitService struct {

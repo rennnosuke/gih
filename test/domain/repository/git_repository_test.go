@@ -2,8 +2,8 @@ package repository
 
 import (
 	"fmt"
-	"gih/domain/repository"
-	"gih/registry"
+	"github.com/rennnosuke/gih/domain/repository"
+	"github.com/rennnosuke/gih/registry"
 	"os"
 	"testing"
 )
@@ -22,7 +22,12 @@ func TestGetIssue(t *testing.T) {
 
 	c := registry.NewGitRepository(accessToken, repositoryName, organization)
 
-	result := c.GetIssue(10)
+	result, err := c.GetIssue(10)
+	if err != nil {
+		fmt.Printf("%s\n", err)
+		t.Fail()
+	}
+
 	fmt.Printf("%#v\n", result)
 
 }
@@ -35,7 +40,12 @@ func TestGetIssues(t *testing.T) {
 
 	c := registry.NewGitRepository(accessToken, repositoryName, organization)
 
-	result := c.GetIssues()
+	result, err := c.GetIssues()
+	if err != nil {
+		fmt.Printf("%s\n", err)
+		t.Fail()
+	}
+
 	fmt.Printf("%#v\n", result)
 
 }
@@ -51,7 +61,13 @@ func TestCreateIssue(t *testing.T) {
 	title := "Create Issue Test Title"
 	description := "Create Issue Test Description."
 	req := repository.IssueCreateRequest{Title: title, Description: description}
-	result := c.CreateIssue(&req)
+
+	result, err := c.CreateIssue(&req)
+	if err != nil {
+		fmt.Printf("%s\n", err)
+		t.Fail()
+	}
+
 	fmt.Println(result)
 
 }
@@ -74,7 +90,14 @@ func TestUpdateIssue(t *testing.T) {
 			Description: description,
 		},
 	}
-	result := c.UpdateIssue(&req)
+
+	result, err := c.UpdateIssue(&req)
+
+	if err != nil {
+		fmt.Printf("%s\n", err)
+		t.Fail()
+	}
+
 	fmt.Println(result)
 
 }

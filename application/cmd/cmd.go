@@ -2,7 +2,7 @@ package cmd
 
 import (
 	"fmt"
-	"gih/registry"
+	"github.com/rennnosuke/gih/registry"
 	"github.com/urfave/cli/v2"
 	"os"
 )
