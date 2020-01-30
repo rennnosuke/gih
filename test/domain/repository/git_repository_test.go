@@ -2,7 +2,7 @@ package repository
 
 import (
 	"fmt"
-	"github.com/rennnosuke/gih/domain/repository"
+	"github.com/rennnosuke/gih/domain/repository/git/issue"
 	"github.com/rennnosuke/gih/registry"
 	"os"
 	"testing"
@@ -60,7 +60,7 @@ func TestCreateIssue(t *testing.T) {
 
 	title := "Create Issue Test Title"
 	description := "Create Issue Test Description."
-	req := repository.IssueCreateRequest{Title: title, Description: description}
+	req := issue.IssueCreateRequest{Title: title, Description: description}
 
 	result, err := c.CreateIssue(&req)
 	if err != nil {
@@ -83,9 +83,9 @@ func TestUpdateIssue(t *testing.T) {
 	title := "Update Issue Test Title"
 	description := "Update Issue Test Description."
 
-	req := repository.IssueUpdateRequest{
+	req := issue.IssueUpdateRequest{
 		IssueId: 10,
-		IssueCreateRequest: repository.IssueCreateRequest{
+		IssueCreateRequest: issue.IssueCreateRequest{
 			Title:       title,
 			Description: description,
 		},

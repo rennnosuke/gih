@@ -2,11 +2,11 @@ package issue
 
 import (
 	"github.com/rennnosuke/gih/domain/model/entity"
-	"github.com/rennnosuke/gih/domain/repository"
+	"github.com/rennnosuke/gih/domain/repository/git/issue"
 )
 
 type GitIssueService struct {
-	Repo *repository.GitRepository
+	Repo *issue.GitIssueRepository
 }
 
 func (s *GitIssueService) GetIssue(id int) (*entity.Issue, error) {
@@ -18,14 +18,14 @@ func (s *GitIssueService) GetIssues() (*[]entity.Issue, error) {
 }
 
 func (s *GitIssueService) CreateIssue(title, description string) (*entity.Issue, error) {
-	r := repository.IssueCreateRequest{Title: title, Description: description}
+	r := issue.IssueCreateRequest{Title: title, Description: description}
 	return (*s.Repo).CreateIssue(&r)
 }
 
 func (s *GitIssueService) UpdateIssue(id int, title, description string) (*entity.Issue, error) {
-	r := repository.IssueUpdateRequest{
+	r := issue.IssueUpdateRequest{
 		IssueId: id,
-		IssueCreateRequest: repository.IssueCreateRequest{
+		IssueCreateRequest: issue.IssueCreateRequest{
 			Title:       title,
 			Description: description,
 		},

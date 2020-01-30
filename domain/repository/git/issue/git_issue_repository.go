@@ -1,8 +1,8 @@
-package repository
+package issue
 
 import "github.com/rennnosuke/gih/domain/model/entity"
 
-type GitRepository interface {
+type GitIssueRepository interface {
 	// issue manipulation
 	GetIssue(issueId int) (*entity.Issue, error)
 	GetIssues() (*[]entity.Issue, error)

@@ -6,7 +6,7 @@ import (
 	"fmt"
 	"github.com/PuerkitoBio/urlesc"
 	"github.com/rennnosuke/gih/domain/model/entity"
-	"github.com/rennnosuke/gih/domain/repository"
+	"github.com/rennnosuke/gih/domain/repository/git/issue"
 	"io/ioutil"
 	"net/http"
 	"path"
@@ -49,7 +49,7 @@ func (c *RepositoryImpl) GetIssues() (*[]entity.Issue, error) {
 	return &issues, nil
 }
 
-func (c *RepositoryImpl) CreateIssue(r *repository.IssueCreateRequest) (*entity.Issue, error) {
+func (c *RepositoryImpl) CreateIssue(r *issue.IssueCreateRequest) (*entity.Issue, error) {
 	req := IssueCreateRequest{r.Title, r.Description}
 	body, err := json.Marshal(req)
 	if err != nil {
@@ -63,7 +63,7 @@ func (c *RepositoryImpl) CreateIssue(r *repository.IssueCreateRequest) (*entity.
 	return &entity.Issue{Number: res.Number, Title: res.Title, Description: res.Body}, nil
 }
 
-func (c *RepositoryImpl) UpdateIssue(r *repository.IssueUpdateRequest) (*entity.Issue, error) {
+func (c *RepositoryImpl) UpdateIssue(r *issue.IssueUpdateRequest) (*entity.Issue, error) {
 	req := IssueUpdateRequest{r.Title, r.Description}
 	body, err := json.Marshal(req)
 	if err != nil {
