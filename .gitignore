@@ -99,3 +99,6 @@ fabric.properties
 
 # gih binary created by ./build.sh
 gih
+
+# envrc
+.envrc
