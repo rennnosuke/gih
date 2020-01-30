@@ -1,10 +1,10 @@
 package registry
 
 import (
-	"github.com/rennnosuke/gih/domain/service"
+	"github.com/rennnosuke/gih/domain/service/git/issue"
 )
 
-func NewGitService(accessToken, repositoryName, organization string) *service.GitService {
+func NewGitService(accessToken, repositoryName, organization string) *issue.GitIssueService {
 	repo := NewGitRepository(accessToken, repositoryName, organization)
-	return &service.GitService{&repo}
+	return &issue.GitIssueService{&repo}
 }

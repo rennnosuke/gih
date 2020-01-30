@@ -3,7 +3,7 @@ package cmd
 import (
 	"fmt"
 	"github.com/rennnosuke/gih/domain/model/entity"
-	"github.com/rennnosuke/gih/domain/service"
+	"github.com/rennnosuke/gih/domain/service/git/issue"
 	"github.com/urfave/cli/v2"
 	"regexp"
 	"strconv"
@@ -19,7 +19,7 @@ var formatPrintIssue = "%-10v%-" + strconv.Itoa(titleMaxLength) + "s%-" + strcon
 
 var newLineRegex = regexp.MustCompile(`\r?\n`)
 
-func listIssues(s *service.GitService) error {
+func listIssues(s *issue.GitIssueService) error {
 	issues, err := s.GetIssues()
 	if err != nil {
 		return err
@@ -33,7 +33,7 @@ func listIssues(s *service.GitService) error {
 	return nil
 }
 
-func createIssue(service *service.GitService, context *cli.Context) error {
+func createIssue(service *issue.GitIssueService, context *cli.Context) error {
 	title := context.Args().Get(0)
 	description := context.Args().Get(1)
 	issue, err := service.CreateIssue(title, description)
@@ -44,7 +44,7 @@ func createIssue(service *service.GitService, context *cli.Context) error {
 	return nil
 }
 
-func updateIssue(service *service.GitService, context *cli.Context) error {
+func updateIssue(service *issue.GitIssueService, context *cli.Context) error {
 	issueNumberStr := context.Args().Get(0)
 	issueNumber, err := strconv.Atoi(issueNumberStr)
 	if err != nil {
@@ -60,7 +60,7 @@ func updateIssue(service *service.GitService, context *cli.Context) error {
 	return nil
 }
 
-func closeIssue(service *service.GitService, context *cli.Context) error {
+func closeIssue(service *issue.GitIssueService, context *cli.Context) error {
 	sid := context.Args().Get(0)
 	id, err := strconv.Atoi(sid)
 	if err != nil {
