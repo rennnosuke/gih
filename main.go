@@ -1,6 +1,6 @@
 package main
 
-import "github.com/rennnosuke/gih/application/cmd"
+import "github.com/rennnosuke/gih/presentation/cmd"
 
 func main() {
 	cmd.Start()
