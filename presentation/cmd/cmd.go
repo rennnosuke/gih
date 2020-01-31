@@ -2,6 +2,7 @@ package cmd
 
 import (
 	"fmt"
+	action2 "github.com/rennnosuke/gih/presentation/cmd/action"
 	"github.com/rennnosuke/gih/registry"
 	"github.com/urfave/cli/v2"
 	"os"
@@ -48,16 +49,16 @@ func action(context *cli.Context) error {
 	s := registry.NewGitService(config.AccessToken, config.RepositoryName, config.Organization)
 
 	if context.Bool("create") {
-		return createIssue(s, context)
+		return action2.createIssue(s, context)
 	}
 
 	if context.Bool("update") {
-		return updateIssue(s, context)
+		return action2.updateIssue(s, context)
 	}
 
 	if context.Bool("close") {
-		return closeIssue(s, context)
+		return action2.closeIssue(s, context)
 	}
 
-	return listIssues(s)
+	return action2.listIssues(s)
 }
