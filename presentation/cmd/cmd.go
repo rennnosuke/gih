@@ -2,7 +2,7 @@ package cmd
 
 import (
 	"fmt"
-	action2 "github.com/rennnosuke/gih/presentation/cmd/action"
+	"github.com/rennnosuke/gih/presentation/cmd/action"
 	"github.com/rennnosuke/gih/registry"
 	"github.com/urfave/cli/v2"
 	"os"
@@ -15,7 +15,7 @@ func Start() {
 	app.Usage = "GitHub Client CLI."
 	app.Version = "0.0.1"
 
-	app.Action = action
+	app.Action = execAction
 
 	app.Flags = []cli.Flag{
 		&cli.BoolFlag{Name: "init"},
@@ -28,7 +28,7 @@ func Start() {
 	_ = app.Run(os.Args)
 }
 
-func action(context *cli.Context) error {
+func execAction(context *cli.Context) error {
 
 	if context.Args().Get(0) == "init" {
 		editConfig()
@@ -49,16 +49,16 @@ func action(context *cli.Context) error {
 	s := registry.NewGitService(config.AccessToken, config.RepositoryName, config.Organization)
 
 	if context.Bool("create") {
-		return action2.createIssue(s, context)
+		return action.CreateIssue(s, context)
 	}
 
 	if context.Bool("update") {
-		return action2.updateIssue(s, context)
+		return action.UpdateIssue(s, context)
 	}
 
 	if context.Bool("close") {
-		return action2.closeIssue(s, context)
+		return action.CloseIssue(s, context)
 	}
 
-	return action2.listIssues(s)
+	return action.ListIssues(s)
 }
